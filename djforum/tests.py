@@ -1,9 +1,10 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 from django.urls import reverse, resolve
+
 from .views import home, board_topics, new_topic
 from .models import Board
-
+from .forms import NewTopicForm
 
 # Create your tests here.
 class HomeTests(TestCase):
@@ -120,7 +121,7 @@ class NewTopicTests(TestCase):
 		self.assertFalse(Post.objects.exists())
 
 
-	def test_contains_form(self):
+	def test_contains_forms(self):
 		url = reverse('new_topic', kwargs = {'pk': 1})
 		response = self.client.get(url)
 		form = response.context.get('form')
