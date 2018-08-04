@@ -4,38 +4,50 @@ from django.urls import reverse, resolve
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-
-from .views import signup
+from ..forms import SignUpForm
+from ..views import signup
 # Create your tests here.
 
-def setUp(self):
-	url = reverse('signup')
-	self.response = self.client.get(url)
+class SignUpTests(TestCase):
+
+	def setUp(self):
+		url = reverse('signup')
+		self.response = self.client.get(url)
 
 
-def test_signup_status_code(self):
-	self.assertEquals(self.response.status_code, 200)
+	def test_signup_status_code(self):
+		self.assertEquals(self.response.status_code, 200)
 
 
-def test_signup_url_resolve_signup_view(self):
-	view = resovle('/signup/')
-	sefl.assertEquals(view.func, signup)
+	def test_signup_url_resolve_signup_view(self):
+		view = resovle('/signup/')
+		sefl.assertEquals(view.func, signup)
 
-def test_csrf(self):
-	self.assertEquals(self.response, 'csrfmiddlewaretoken')
+	def test_csrf(self):
+		self.assertEquals(self.response, 'csrfmiddlewaretoken')
 
-def test_contains_form(self):
-	form = self.reponse.context.get('form')
-	self.assertIsInstance(form, UserCreationForm)
+	def test_contains_form(self):
+		form = self.reponse.context.get('form')
+		self.assertIsInstance(form, SignUpForm)
+
+	def test_form_inputs(self):
+		'''
+		the view must contain five inputs: csrf, username, email, password1, password2
+		'''
+		self.assertContains(self.response, '<input', 5)
+		self.assertContains(self.response, 'type = "text"', 1)
+		self.assetContains(self.response, 'type = "email"', 1)
+		self.assertContains(self.response, 'type = "password"', 2)
 
 class SuccessfulSignUpTests(TestCase):
 
 	def setUp(self):
 		url = reverse('signup')
 		data = {
-			'username' : 'john',
-			'password1': 'abcdef123456',
-			'password2': 'abcdef123456'
+			'username'	: 'john',
+			'email'		: 'john@doe.com',
+			'password1'	: 'abcdef123456',
+			'password2'	: 'abcdef123456'
 		}
 		self.response = self.client.post(url, data)
 		self.home_url = reverse('home')
