@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse, resolve
 
 from .views import home, board_topics, new_topic
-from .models import Board
+from .models import Board, Topic, Post
 from .forms import NewTopicForm
 
 # Create your tests here.
@@ -83,7 +83,7 @@ class NewTopicTests(TestCase):
 		self.assertContains(response, 'csrfmiddlewaretoken')
 
 	def test_new_topic_valid_post_data(self):
-		url = response('new_topic', kwargs ={'pk': 1})
+		url = reverse('new_topic', kwargs ={'pk': 1})
 		data = {
 			'subject': 'Test tile',
 			'message': 'Lorem ipsum dolor sit.'
