@@ -8,26 +8,41 @@
 	<link rel="stylesheet" href="{% static 'css/apps.css' %}">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Pelata" rel="stylesheet">
 
+	{% block stylesheet %}{% endblock %}
+
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	{% block body %}
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		  <a class="navbar-brand" href="{% url 'home' %}">Djanog Board</a>
+		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+		    <span class="navbar-toggler-icon"></span>
+		  </button>
+
+		  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+		    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+		      <li class="nav-item active">
+		        <a class="nav-link" href="#">{{user.username}}</a>
+		      </li>		     
+		    </ul>		    
+		  </div>
+		</nav>
 		<div class="container">
-			<a href="{% url 'home' %}" class="navbar-brand">Django Board</a>
+			<ol class="breadcrumb my-4">
+				{% block breadcrumb %}
+				{% endblock breadcrumb %}
+			</ol>
+
+			{% block content %}
+			{% endblock content %}
 		</div>
-	</nav>
-	<div class="container">
-		<ol class="breadcrumb my-4">
-			{% block breadcrumb %}
-			{% endblock %}
-		</ol>
+		
 
-		{% block content %}
-		{% endblock %}
-	</div>
-	
+		<script src="{% static 'js/bootstrap.min.js' %}"></script>
+		<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+		<script src="{% static 'js/popper.js' %}"></script>
+		{% block javascript %}{% endblock javascript %}
 
-	<script src="{% static 'js/bootstrap.min.js' %}"></script>
-	<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
-	<script src="{% static 'js/popper.js' %}"></script>
+	{% endblock body %}
 </body>
 </html>
