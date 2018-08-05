@@ -1,12 +1,8 @@
-{% extends 'base.html' %}
+{% extends 'base_accounts.html' %}
 
-{% load static %}
+{% block title %}Log in to Django Board {% endblock %}
 
-{% block stylesheet %}
-	<link rel="stylesheet" href="{% static 'css/accounts.css' %}">
-{% endblock stylesheet %}
-
-{% block body %}
+{% block content %}
 
 	<div class="container">
 		<h1 class="text-center logo my-4">
@@ -20,11 +16,14 @@
 						<form action="" method="post" novalidate="">
 							{% csrf_token %}
 							{% include 'includes/form.html' %}
-
-						</form>
-						<button type="submit" class="btn btn-primary btn-block">Log in</button>
+							<button type="submit" class="btn btn-primary btn-block">Log in</button>
+						</form>						
+					</div>
+					<div class="card-footer text-muted text-center">
+						<small><a href="#" class="text-muted">Forget your password</a></small>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+{% endblock content %}
