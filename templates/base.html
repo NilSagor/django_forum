@@ -20,11 +20,24 @@
 		  </button>
 
 		  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+		    {% if user.is_authenticated %}
 		    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
 		      <li class="nav-item active">
 		        <a class="nav-link" href="#">{{user.username}}</a>
-		      </li>		     
-		    </ul>		    
+		        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+		          <a class="dropdown-item" href="#">My account</a>
+		          <a class="dropdown-item" href="#">Change password</a>
+		          <div class="dropdown-divider"></div>
+		          <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
+		        </div>
+		      </li>
+		     </ul>	
+		     {% else %}
+		     	<form action="" class="form-inline ml-auto">
+		     		<a href="{% url 'login' %}" class="btn btn-outline-secondary">Log in</a>
+		     		<a href="{% url 'signup' %}" class="btn btn-secondary ml-2">SignUp</a>
+		     	</form>
+		     {% endif %} 	    
 		  </div>
 		</nav>
 		<div class="container">
