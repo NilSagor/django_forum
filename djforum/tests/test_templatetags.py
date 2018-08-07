@@ -26,3 +26,10 @@ class InputClassTests(TestCase):
 
 	def test_valid_bound_field(self):
 		form = ExampleForm({'name': 'john', 'password': '123'}) # bound form (form + data)
+		self.assertEquals('form-control is-valid', input_class(form['name']))
+		self.assertEquals('form-control ', input_class(form['password']))
+
+
+	def test_invalid_bound_field(self):
+		form = ExampleForm({'name': '', 'password': '123'}) # bound form(form+data)
+		self.assertEquals('form-control is-invalid', input_class(form['name']))
