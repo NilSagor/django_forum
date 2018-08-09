@@ -21,8 +21,8 @@ class FieldTypeTest(TestCase):
 class InputClassTests(TestCase):
 
 	def test_unbound_field_initial_state(self):
-		form = ExampleForm()
-		self.assertEquals('form-control', input_class(form['name']))
+		form = ExampleForm() #unbound form
+		self.assertEquals('form-control ', input_class(form['name']))
 
 	def test_valid_bound_field(self):
 		form = ExampleForm({'name': 'john', 'password': '123'}) # bound form (form + data)
