@@ -32,7 +32,7 @@ class NewTopicTests(TestCase):
 		view = resolve('/boards/1/new/')
 		self.assertEquals(view.func, new_topic)
 
-	def test_new_topic_view_contains_link_back_to_board_new_topic_view(self):
+	def test_new_topic_view_contains_link_back_to_board_topics_view(self):
 		new_topic_url = reverse('new_topic', kwargs ={'pk': 1})
 		board_topics_url = reverse('board_topics', kwargs ={'pk': 1})
 		response = self.client.get(new_topic_url)
@@ -43,6 +43,13 @@ class NewTopicTests(TestCase):
 		response = self.client.get(url)
 		self.assertContains(response, 'csrfmiddlewaretoken')
 
+
+	def test_contains_forms(self):
+		url = reverse('new_topic', kwargs = {'pk': 1})
+		response = self.client.get(url)
+		form = response.context.get('form')
+		self.assertIsInstance(form, NewTopicForm)
+
 	def test_new_topic_valid_post_data(self):
 		url = reverse('new_topic', kwargs ={'pk': 1})
 		data = {
@@ -50,7 +57,7 @@ class NewTopicTests(TestCase):
 			'message': 'Lorem ipsum dolor sit.'
 
 		}
-		response = self.client.post(url, data)
+		self.client.post(url, data)
 		self.assertTrue(Topic.objects.exists())
 		self.assertTrue(Post.objects.exists())
 
@@ -82,8 +89,4 @@ class NewTopicTests(TestCase):
 		self.assertFalse(Post.objects.exists())
 
 
-	def test_contains_forms(self):
-		url = reverse('new_topic', kwargs = {'pk': 1})
-		response = self.client.get(url)
-		form = response.context.get('form')
-		self.assertIsInstance(form, NewTopicForm)
+	
