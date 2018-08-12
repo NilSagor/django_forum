@@ -27,7 +27,7 @@ class LoginRequiredReplyTopicTests(ReplyTopicTestCase):
 	def test_redirection(self):
 		login_url = reverse('login')
 		response = self.client.get(self.url)
-		self.assertRedirects(response, '{login}?next={url}'.format(login_url = login_url, url = self.url))
+		self.assertRedirects(response, '{login_url}?next={url}'.format(login_url = login_url, url = self.url))
 
 class ReplyTopicTests(ReplyTopicTestCase):
 	def setUp(self):
@@ -47,7 +47,7 @@ class ReplyTopicTests(ReplyTopicTestCase):
 
 	def test_contains_form(self):
 		form = self.response.context.get('form')
-		self.assertIsInstance(form.PostForm)
+		self.assertIsInstance(form, PostForm)
 
 	def test_form_inputs(self):
 		'''
@@ -83,7 +83,7 @@ class InvalidReplyTopicTests(ReplyTopicTestCase):
 		submit an empty dictionary to the reply_topic view
 		'''
 		super().setUp()
-		self.client.login(username= self.username, password = self.password)
+		self.client.login(username = self.username, password = self.password)
 		self.response = self.client.post(self.url, {})
 
 	def test_status_code(self):
