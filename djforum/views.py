@@ -14,6 +14,11 @@ from .forms import NewTopicForm, PostForm
 
 
 # Create your views here.
+class BoardListView(ListView):
+	 model = Board
+	 context_objects_name = 'boards'
+	 template_name = 'home.html'
+
 def home(request):
 	boards = Board.objects.all()
 	return render(request, 'home.html', {'boards': boards})
@@ -81,7 +86,7 @@ class PostUpdateView(UpdateView):
 		queryset = super().get_queryset()
 		return queryset.filter(created_by = self.request.user)
 
-		
+
 	def form_valid(self, form):
 		post = form.save(commit = False)
 		post.updated_by = self.request.user
