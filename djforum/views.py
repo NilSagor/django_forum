@@ -3,9 +3,10 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.db.models import Count
+from django.core.paginator import paginator, EmptyPage, PageNotAnInteger
 
 from django.utils import timezone
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, ListView
 
 
 from .models import Board, Topic, Post
@@ -21,7 +22,16 @@ class BoardListView(ListView):
 
 def board_topics(request, pk):
 	board = get_object_or_404(Board, pk = pk)
-	topics = board.topics.order_by('-last_updated').annotate(replies=Count('posts')-1)
+	queryset = board.topics.order_by('-last_updated').annotate(replies = count(post)-1)
+	page = request.GET.get('page', 1)
+	paginator = Paginator(queryset, 20)
+	try:
+		topics = paginator.page(page)
+	except PageNotAnInteger:
+		topics = paginator.page(1) #fallback to the first page
+	except EmptyPage:
+		topics = paginator.page(paginator.num_pages)
+
 	return render(request, 'topics.html', {'board': board, 'topics':topics})
 
 
