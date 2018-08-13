@@ -19,10 +19,6 @@ class BoardListView(ListView):
 	 context_objects_name = 'boards'
 	 template_name = 'home.html'
 
-def home(request):
-	boards = Board.objects.all()
-	return render(request, 'home.html', {'boards': boards})
-
 def board_topics(request, pk):
 	board = get_object_or_404(Board, pk = pk)
 	topics = board.topics.order_by('-last_updated').annotate(replies=Count('posts')-1)
