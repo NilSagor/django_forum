@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 
 {% block title %}
 	start a new title
 {% endblock title %}
+
+{% block stylesheet %}
+	<link rel="stylesheet" href="{% static 'css/simplemde.css' %}">
+{% endblock stylesheet %}
 
 {% block breadcrumb %}
 	<li class="breadcrumb-item"><a href="{% url 'home' %}">Boards</a></li>
@@ -19,3 +25,10 @@
 		<button type="submit" class="btn btn-success">Post</button>
 	</form>
 {% endblock content %}
+
+{% block javascript %}
+	<script src="{% static 'js/simplemde.js' %}"></script>
+	<script>
+		var simplemde = new SimpleMDE();
+	</script>
+{% endblock javascript %}

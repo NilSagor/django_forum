@@ -67,7 +67,7 @@ class PostUpdateViewTests(PostUpdateViewTestCase):
 	def test_status_code(self):
 		self.assertEqual(self.response.status_code, 200)
 
-	def test_view_class(self):
+	def test_view_function(self):
 		view = resolve('/boards/1/topics/1/posts/1/edit/')
 		self.assertEqual(view.func.view_class, PostUpdateView)
 

@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %} Edit post {% endblock title %}
+
+{% block stylesheet %}
+	<link rel="stylesheet" href="{% static 'css/simplemde.css' %}">
+{% endblock stylesheet %}
 
 {% block breadcrumb %} 
 	<li class="breadcrumb-item"><a href="{% url 'home' %}">Boards</a></li>
@@ -16,4 +22,12 @@
 		<a href="{% url 'topic_posts' post.topic.board.pk post.topic.pk %}" class="btn btn-outline-secondary" role="button">Cancel</a>
 	</form>
 {% endblock content %}
+
+{% block javascript %}
+	<script src="{% static 'js/simplemde.js' %}"></script>
+	<script>
+		var simplemde = new SimpleMDE();
+	</script>
+{% endblock javascript %}
+
 
