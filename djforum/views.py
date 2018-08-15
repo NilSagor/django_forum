@@ -117,7 +117,7 @@ def reply_topic(request, pk, topic_pk):
 
 			topic_url = reverse('topic_posts', kwargs={'pk':pk, 'topic_pk': topic_pk})
 			topic_post_url = '{url}?page={page}#{id}'.format(
-				ulr = topic_url,
+				url = topic_url,
 				id = post.pk,
 				page = topic.get_page_count()
 			)
