@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
 
-{% load static %}
-
 
 {% block title %}
 	start a new title
@@ -25,10 +23,3 @@
 		<button type="submit" class="btn btn-success">Post</button>
 	</form>
 {% endblock content %}
-
-{% block javascript %}
-	<script src="{% static 'js/simplemde.js' %}"></script>
-	<script>
-		var simplemde = new SimpleMDE();
-	</script>
-{% endblock javascript %}
